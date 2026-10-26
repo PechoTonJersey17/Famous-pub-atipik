@@ -9,6 +9,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') setNav(false
 // Onglets de la carte (Famous Bus / Atipik)
 const tabs = [...document.querySelectorAll('[role=tab]')];
 function showTab(id, focus) {
+  document.getElementById('carte').dataset.theme = id;
   tabs.forEach(t => {
     const on = t.id === 'tab-' + id;
     t.setAttribute('aria-selected', on);
@@ -28,7 +29,7 @@ document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click',
 showTab('famous');
 
 // Apparition douce
-const targets = document.querySelectorAll('.truck, .items li, .atipik-cards figure, blockquote, .c-card, .ev-grid > *, .story .wrap > *');
+const targets = document.querySelectorAll('.truck, .atipik-cards figure, .c-card, .ev > *');
 if ('IntersectionObserver' in window) {
   targets.forEach(el => el.classList.add('reveal'));
   const io = new IntersectionObserver(es => es.forEach(e => {
@@ -36,20 +37,6 @@ if ('IntersectionObserver' in window) {
   }), { threshold: 0.1 });
   targets.forEach(el => io.observe(el));
 }
-
-// Installation sur l'écran d'accueil (Android/Chrome, ordinateur) + astuce iPhone
-let deferred;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); deferred = e;
-  document.getElementById('install').hidden = false;
-});
-document.getElementById('install-btn').addEventListener('click', async () => {
-  if (!deferred) return;
-  deferred.prompt(); await deferred.userChoice; deferred = null;
-  document.getElementById('install').hidden = true;
-});
-const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !navigator.standalone;
-if (ios) document.getElementById('ios-tip').hidden = false;
 
 // Fonctionne aussi hors connexion
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
