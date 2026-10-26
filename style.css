@@ -175,3 +175,74 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
   * { transition: none !important; animation: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ====== Cinéma ====== */
+/* Accueil plein écran : photos qui se fondent, zoom lent */
+.hero { position: relative; min-height: 92vh; display: flex; align-items: center; overflow: hidden; background: var(--ink); }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,10,9,.88) 5%, rgba(11,10,9,.35) 60%, rgba(11,10,9,.6)), linear-gradient(180deg, transparent 60%, var(--ink)); }
+.slides, .slide { position: absolute; inset: 0; }
+.slide { opacity: 0; animation: slide 30s infinite; animation-delay: calc(var(--i) * 6s); }
+.slide img { width: 100%; height: 100%; object-fit: cover; animation: kenburns 30s infinite; animation-delay: calc(var(--i) * 6s); }
+@keyframes slide { 0% { opacity: 0 } 4% { opacity: 1 } 20% { opacity: 1 } 26% { opacity: 0 } 100% { opacity: 0 } }
+@keyframes kenburns { 0% { transform: scale(1.02) translate3d(0,0,0) } 26% { transform: scale(1.14) translate3d(-1.5%,-1%,0) } 100% { transform: scale(1.14) } }
+.hero-in { position: relative; z-index: 2; display: block; width: 100%; max-width: 1080px; margin: 0 auto; padding: 80px var(--gutter) 120px; }
+.hero h1 { font-size: clamp(64px, 12vw, 150px); text-shadow: 0 4px 40px rgba(0,0,0,.6); }
+.hero .lead { font-size: 21px; }
+.hero .eyebrow, .hero h1, .hero .lead, .hero .cta { animation: rise 1s both; }
+.hero h1 { animation-delay: .15s } .hero .lead { animation-delay: .35s } .hero .cta { animation-delay: .55s }
+@keyframes rise { from { opacity: 0; transform: translateY(26px) } }
+.scroll-cue { position: absolute; z-index: 2; left: 50%; bottom: 26px; translate: -50% 0; width: 30px; height: 50px; border: 2px solid rgba(246,240,228,.7); border-radius: 20px; }
+.scroll-cue span { position: absolute; left: 50%; top: 8px; width: 4px; height: 10px; margin-left: -2px; border-radius: 2px; background: var(--paper); animation: cue 1.8s infinite; }
+@keyframes cue { 0% { opacity: 1; transform: translateY(0) } 80%,100% { opacity: 0; transform: translateY(18px) } }
+.btn:not(.btn-ghost):not(.btn-sm) { position: relative; overflow: hidden; }
+.btn:not(.btn-ghost):not(.btn-sm)::after { content: ""; position: absolute; top: 0; left: -80%; width: 50%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); animation: shine 4.5s infinite; }
+@keyframes shine { 0%, 60% { left: -80% } 100% { left: 140% } }
+
+/* Les incontournables : on touche, la photo s'anime et révèle le plat */
+.stars { background: var(--ink); }
+.star-row { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.star { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; background: #000; }
+.star-btn { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: none; cursor: pointer; color: inherit; text-align: left; }
+.star-btn img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1), filter .6s; }
+.star:hover .star-btn img { transform: scale(1.1); }
+.star-btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.85)); }
+.star-name { position: absolute; z-index: 1; left: 18px; right: 70px; bottom: 16px; font: 400 30px/1 "Bebas Neue"; letter-spacing: .04em; }
+.star-more { position: absolute; z-index: 1; right: 14px; bottom: 12px; width: 44px; height: 44px; border-radius: 50%; background: var(--red); display: grid; place-items: center; font-size: 28px; line-height: 1; animation: pulse 2.4s infinite; transition: transform .3s; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(211,38,45,.6) } 70%, 100% { box-shadow: 0 0 0 16px rgba(211,38,45,0) } }
+.star-pop { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 22px; background: linear-gradient(180deg, rgba(28,11,12,.2), rgba(28,11,12,.96) 55%);
+  opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity .45s, transform .45s; }
+.star-pop b { font: 400 34px/1 "Bebas Neue"; letter-spacing: .04em; }
+.star-pop span { color: #eee4d2; }
+.star-pop em { font: 400 30px "Bebas Neue"; color: #ff777c; letter-spacing: .04em; }
+.star-pop .btn { align-self: flex-start; }
+.star.open .star-pop { opacity: 1; pointer-events: auto; transform: none; }
+.star.open .star-btn img { transform: scale(1.12); filter: blur(2px) brightness(.7); }
+.star.open .star-more { transform: rotate(45deg); }
+.hint { margin-top: 22px; font-size: 14px; color: var(--muted); }
+
+/* Bandeau avec effet de profondeur */
+.band { position: relative; height: 70vh; min-height: 420px; overflow: hidden; display: grid; place-items: center; text-align: center; }
+.band-img { position: absolute; inset: -12% 0; }
+.band-img img { width: 100%; height: 100%; object-fit: cover; }
+.band::after { content: ""; position: absolute; inset: 0; background: rgba(11,10,9,.62); }
+.band-txt { position: relative; z-index: 1; padding: 0 var(--gutter); }
+.band-txt h2 { font-size: clamp(54px, 10vw, 120px); line-height: .95; }
+.band-txt .btn { margin-top: 10px; }
+
+/* Apparition en cascade */
+.masonry li.reveal { transition-delay: calc(var(--d, 0) * 60ms); }
+.ev-photos img { transition: transform 1s; }
+.ev-photos img:hover { transform: scale(1.03); }
+
+@media (max-width: 860px) {
+  .hero { min-height: 88vh; }
+  .hero-in { padding: 60px var(--gutter) 110px; }
+  .star-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 0 var(--gutter) 12px; margin: 0 calc(var(--gutter) * -1); scrollbar-width: none; }
+  .star-row::-webkit-scrollbar { display: none; }
+  .star { flex: 0 0 76%; scroll-snap-align: center; }
+  .band { height: 56vh; min-height: 340px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide { animation: none; } .slide:first-child { opacity: 1; } .slide img, .star-more, .scroll-cue span, .btn::after { animation: none !important; }
+  .hero .eyebrow, .hero h1, .hero .lead, .hero .cta { animation: none; }
+}
