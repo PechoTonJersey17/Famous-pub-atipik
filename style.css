@@ -396,3 +396,18 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
   .atipik-cards figcaption { font-size: 18px; padding: 30px 12px 10px; letter-spacing: .06em; }
   .atipik-cards figure img.cut { max-width: 86%; max-height: 58%; }
 }
+
+/* ====== Carte Atipik : même cartes que le Famous Bus, en or sur olive, police à empattement ====== */
+.menu[data-theme="atipik"] .dish { background: #f1e9d2; color: #1c1a0d; box-shadow: 0 10px 26px rgba(0,0,0,.4); }
+.menu[data-theme="atipik"] .dish h4 { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 26px; letter-spacing: .08em; text-transform: uppercase; color: #1c1a0d; }
+.menu[data-theme="atipik"] .dish p { color: #5b563a; }
+.menu[data-theme="atipik"] .cat > h3 { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: clamp(30px, 5vw, 46px); color: var(--gold-soft); }
+.menu[data-theme="atipik"] .cat > h3::after { background: repeating-linear-gradient(90deg, var(--gold) 0 14px, transparent 14px 22px); }
+.menu[data-theme="atipik"] .studio { background: radial-gradient(ellipse at 50% 36%, #6a6130 0%, #38341a 46%, #17160b 100%); }
+.menu[data-theme="atipik"] .studio::before { background: radial-gradient(circle, rgba(220,203,134,.24), rgba(220,203,134,0) 68%); border-color: rgba(220,203,134,.28); }
+.menu[data-theme="atipik"] .order { margin-top: 18px; }
+@media (max-width: 860px) { .menu[data-theme="atipik"] .dish h4 { font-size: 20px; letter-spacing: .05em; } }
+
+/* photos détourées toujours entières dans leur carte */
+.dish-media.studio img.cut { position: absolute; inset: 9% 8% 15%; width: 84%; height: 76%; max-width: none; max-height: none; margin: 0; object-fit: contain; }
+@media (max-width: 860px) { .dish-media.studio img.cut { inset: 14% 8% 12%; width: 84%; height: 74%; margin: 0; } }
