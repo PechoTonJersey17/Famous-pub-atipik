@@ -370,3 +370,4 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
   .dish-media.ico svg { width: 46%; margin-top: 10%; }
 }
 @media (min-width: 861px) { .dish-media.studio img.cut { margin-top: 5%; max-height: 78%; } }
+.truck-body h3 { margin-bottom: 4px; } .hero .lead { font-size: 22px; }
