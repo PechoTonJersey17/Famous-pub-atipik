@@ -99,3 +99,14 @@ if (px.length && !still) {
 
 // Galerie : apparition en cascade
 document.querySelectorAll('.masonry li').forEach((li, i) => li.style.setProperty('--d', i % 4));
+
+// Cartes du menu : toucher une carte révèle sa description et son prix (une seule ouverte à la fois par menu)
+document.querySelectorAll('.panel').forEach(panel => {
+  const items = [...panel.querySelectorAll('.dish')];
+  items.forEach(it => it.querySelector('.dish-btn').addEventListener('click', () => {
+    const open = !it.classList.contains('open');
+    items.forEach(o => { o.classList.remove('open'); o.querySelector('.dish-btn').setAttribute('aria-expanded', 'false'); });
+    if (open) { it.classList.add('open'); it.querySelector('.dish-btn').setAttribute('aria-expanded', 'true'); }
+  }));
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.dish.open').forEach(o => o.classList.remove('open')); });
