@@ -9,6 +9,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') setNav(false
 // Onglets de la carte (Famous Bus / Atipik)
 const tabs = [...document.querySelectorAll('[role=tab]')];
 function showTab(id, focus) {
+  document.getElementById('carte').dataset.theme = id;
   tabs.forEach(t => {
     const on = t.id === 'tab-' + id;
     t.setAttribute('aria-selected', on);
@@ -28,7 +29,7 @@ document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click',
 showTab('famous');
 
 // Apparition douce
-const targets = document.querySelectorAll('.truck, .items li, .atipik-cards figure, blockquote, .c-card, .ev-grid > *, .story .wrap > *');
+const targets = document.querySelectorAll('.truck, .atipik-cards figure, .c-card, .ev > *, .masonry li');
 if ('IntersectionObserver' in window) {
   targets.forEach(el => el.classList.add('reveal'));
   const io = new IntersectionObserver(es => es.forEach(e => {
@@ -36,20 +37,6 @@ if ('IntersectionObserver' in window) {
   }), { threshold: 0.1 });
   targets.forEach(el => io.observe(el));
 }
-
-// Installation sur l'écran d'accueil (Android/Chrome, ordinateur) + astuce iPhone
-let deferred;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); deferred = e;
-  document.getElementById('install').hidden = false;
-});
-document.getElementById('install-btn').addEventListener('click', async () => {
-  if (!deferred) return;
-  deferred.prompt(); await deferred.userChoice; deferred = null;
-  document.getElementById('install').hidden = true;
-});
-const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !navigator.standalone;
-if (ios) document.getElementById('ios-tip').hidden = false;
 
 // Fonctionne aussi hors connexion
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
@@ -83,3 +70,32 @@ lb.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - x0;
   if (Math.abs(dx) > 50) openShot(cur + (dx < 0 ? 1 : -1));
 });
+
+// Incontournables : toucher une photo révèle le plat (une seule ouverte à la fois)
+const stars = [...document.querySelectorAll('.star')];
+stars.forEach(st => st.querySelector('.star-btn').addEventListener('click', () => {
+  const open = !st.classList.contains('open');
+  stars.forEach(o => { o.classList.remove('open'); o.querySelector('.star-btn').setAttribute('aria-expanded', 'false'); });
+  if (open) { st.classList.add('open'); st.querySelector('.star-btn').setAttribute('aria-expanded', 'true'); }
+}));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') stars.forEach(o => o.classList.remove('open')); });
+
+// Effet de profondeur : l'image du bandeau bouge moins vite que la page
+const px = document.querySelectorAll('[data-parallax]');
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (px.length && !still) {
+  let tick = false;
+  const run = () => {
+    px.forEach(el => {
+      const r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      el.style.transform = `translate3d(0, ${(r.top + r.height / 2 - innerHeight / 2) * -0.12}px, 0)`;
+    });
+    tick = false;
+  };
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(run); } }, { passive: true });
+  run();
+}
+
+// Galerie : apparition en cascade
+document.querySelectorAll('.masonry li').forEach((li, i) => li.style.setProperty('--d', i % 4));
