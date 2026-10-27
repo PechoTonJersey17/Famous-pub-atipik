@@ -477,3 +477,57 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
 @media (max-width: 860px) { .drinks { grid-template-columns: 1fr; } }
 .drinks li.drink { display: block; padding: 0; gap: 0; align-items: initial; }
 .drink-btn > span:first-child { flex: 1; min-width: 0; }
+
+/* ====== Cartes épurées : photo + nom seulement. Le détail s'ouvre dans une fenêtre au clic ====== */
+.dish-pop, .star-pop { display: none !important; }
+.dish-more, .star-more, .dish.open .dish-media { }
+.dish-btn .dish-more, .star-btn .star-more { display: none; }
+.dish { background: none; box-shadow: none; overflow: hidden; border-radius: var(--radius); }
+.dish-btn { position: relative; display: block; aspect-ratio: 1 / 1; border-radius: var(--radius); overflow: hidden; }
+.dish-btn .dish-media.studio, #cat-boissons .dish-btn .dish-media.studio { position: absolute; inset: 0; aspect-ratio: auto; width: 100%; height: 100%; }
+.dish-btn .dish-media.studio img.cut { inset: 8% 8% 22%; width: 84%; height: 70%; }
+.dish-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: block; min-height: 0; padding: 36px 14px 14px; background: linear-gradient(transparent, rgba(0,0,0,.72)); text-align: center; }
+.dish h4, .menu[data-theme="atipik"] .dish h4 { color: #fff; font-size: 24px; letter-spacing: .05em; }
+.menu[data-theme="atipik"] .dish h4 { font-family: "Cormorant Garamond", serif; font-weight: 600; text-transform: uppercase; font-size: 19px; letter-spacing: .08em; color: var(--gold-soft); }
+.dish:hover { transform: translateY(-4px); }
+.dish.open .dish-media { filter: none; }
+.dish.open .dish-body, .dish.open .badge { opacity: 1; }
+.dish-media.ico svg { margin-top: -8%; }
+.star-name { text-align: left; }
+@media (max-width: 860px) {
+  .dish h4 { font-size: 20px; }
+  .menu[data-theme="atipik"] .dish h4 { font-size: clamp(12px, 3.4vw, 15px); letter-spacing: .05em; }
+  .dish-body { padding: 28px 8px 10px; }
+}
+
+/* Fenêtre de détail */
+.detail { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(5,3,3,.78); color: #fff4e6; backdrop-filter: blur(4px); }
+.detail:not([open]) { display: none; }
+.detail[open] { display: grid; place-items: center; animation: fadein .25s; }
+@keyframes fadein { from { opacity: 0 } }
+.detail-card { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: min(820px, 92vw); border-radius: 24px; overflow: hidden; background: #1c0b0c; box-shadow: 0 30px 80px rgba(0,0,0,.6); animation: pop .3s cubic-bezier(.2,.8,.2,1); }
+@keyframes pop { from { transform: translateY(24px) scale(.98); opacity: 0 } }
+.detail-media { position: relative; min-height: 340px; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 36%, #ee4a50 0%, #b52a32 40%, #5c1116 100%); }
+.detail-media img { width: 82%; max-height: 78%; object-fit: contain; filter: drop-shadow(0 16px 14px rgba(0,0,0,.5)); }
+.detail-media svg { width: 42%; fill: none; stroke: #fff4e6; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.detail-text { display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 34px 30px; }
+.detail-text h3 { font-size: 40px; color: #fff; margin: 0; }
+.detail-text p { margin: 0; color: #eadfcd; font-size: 17px; line-height: 1.55; }
+.detail-price { font: 400 44px/1 "Bebas Neue"; letter-spacing: .04em; color: #ff8a8f; }
+.detail-text .btn { align-self: flex-start; }
+.detail-close { position: absolute; top: 12px; right: 12px; z-index: 3; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(0,0,0,.45); color: #fff; font-size: 28px; line-height: 1; cursor: pointer; }
+.detail[data-theme="atipik"] .detail-card { background: #17160b; }
+.detail[data-theme="atipik"] .detail-media { background: radial-gradient(ellipse at 50% 36%, #6a6130 0%, #38341a 46%, #17160b 100%); }
+.detail[data-theme="atipik"] .detail-text h3 { font: 600 28px/1.1 "Cormorant Garamond", serif; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-soft); }
+.detail[data-theme="atipik"] .detail-price { color: var(--gold-soft); }
+@media (max-width: 860px) {
+  .detail[open] { place-items: end center; }
+  .detail-card { grid-template-columns: 1fr; width: 100%; border-radius: 24px 24px 0 0; max-height: 92vh; overflow-y: auto; animation: sheet .3s cubic-bezier(.2,.8,.2,1); padding-bottom: env(safe-area-inset-bottom); }
+  @keyframes sheet { from { transform: translateY(100%) } }
+  .detail-media { min-height: 0; aspect-ratio: 4 / 3; }
+  .detail-text { padding: 22px 22px 26px; gap: 10px; }
+  .detail-text h3 { font-size: 32px; }
+  .detail[data-theme="atipik"] .detail-text h3 { font-size: 21px; }
+  .detail-text p { font-size: 15px; }
+  .detail-price { font-size: 38px; }
+}

@@ -110,3 +110,36 @@ document.querySelectorAll('.panel').forEach(panel => {
   }));
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.dish.open, .drink.open').forEach(o => o.classList.remove('open')); });
+
+
+// Fenêtre de détail : s'ouvre au clic sur un plat (photo, description, prix, bouton)
+const det = document.createElement('dialog');
+det.className = 'detail'; det.setAttribute('aria-label', 'Détail du produit');
+det.innerHTML = '<div class="detail-card"><button type="button" class="detail-close" aria-label="Fermer">×</button><div class="detail-media"></div><div class="detail-text"></div></div>';
+document.body.appendChild(det);
+const dMedia = det.querySelector('.detail-media'), dText = det.querySelector('.detail-text');
+function openDetail(card, theme) {
+  const pop = card.querySelector('.dish-pop, .star-pop');
+  const pic = card.querySelector('img.cut, .dish-media svg');
+  if (!pop) return;
+  dMedia.innerHTML = '';
+  if (pic) { const c = pic.cloneNode(true); c.removeAttribute('loading'); dMedia.appendChild(c); }
+  const price = pop.querySelector('em'), btn = pop.querySelector('a');
+  dText.innerHTML = '<h3></h3><p></p><div class="detail-price"></div>';
+  dText.querySelector('h3').textContent = pop.querySelector('b').textContent;
+  dText.querySelector('p').textContent = pop.querySelector('span').textContent;
+  dText.querySelector('.detail-price').textContent = price ? price.textContent : '';
+  if (!price) dText.querySelector('.detail-price').remove();
+  if (btn) { const a = btn.cloneNode(true); a.className = 'btn' + (theme === 'atipik' ? ' btn-gold' : ''); dText.appendChild(a); }
+  det.dataset.theme = theme;
+  if (!det.open) det.showModal();
+}
+det.querySelector('.detail-close').addEventListener('click', () => det.close());
+det.addEventListener('click', e => { if (e.target === det) det.close(); });
+document.querySelectorAll('.dish').forEach(d => d.querySelector('.dish-btn').addEventListener('click', e => {
+  e.stopImmediatePropagation();
+  openDetail(d, d.closest('#carte-atipik') ? 'atipik' : 'famous');
+}, true));
+document.querySelectorAll('.star').forEach(d => d.querySelector('.star-btn').addEventListener('click', e => {
+  e.stopImmediatePropagation(); openDetail(d, 'famous');
+}, true));
