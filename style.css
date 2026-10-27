@@ -465,3 +465,15 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
 .dish.open .dish-body, .dish.open .badge { opacity: 0; }
 .dish-body h4 { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 860px) { .menu[data-theme="atipik"] .dish h4 { font-size: clamp(11.5px, 3.3vw, 14px); letter-spacing: .02em; } .menu[data-theme="atipik"] .dish-body { padding-left: 12px; gap: 6px; } }
+
+/* Boissons : simple liste, le prix s'affiche au clic */
+.drinks { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.drink { border-radius: 16px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); overflow: hidden; }
+.drink-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px 12px 18px; min-height: 56px; border: 0; background: none; color: inherit; font: 600 16px "Inter", sans-serif; text-align: left; cursor: pointer; }
+.drink-pop { display: none; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 18px 14px; color: #f0e4d2; font-size: 14px; }
+.drink-pop em { font: 400 28px/1 "Bebas Neue"; letter-spacing: .04em; color: #ff8a8f; white-space: nowrap; }
+.drink.open .drink-pop { display: flex; }
+.drink.open .dish-more { transform: rotate(45deg); }
+@media (max-width: 860px) { .drinks { grid-template-columns: 1fr; } }
+.drinks li.drink { display: block; padding: 0; gap: 0; align-items: initial; }
+.drink-btn > span:first-child { flex: 1; min-width: 0; }
