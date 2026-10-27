@@ -246,3 +246,45 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
   .slide { animation: none; } .slide:first-child { opacity: 1; } .slide img, .star-more, .scroll-cue span, .btn::after { animation: none !important; }
   .hero .eyebrow, .hero h1, .hero .lead, .hero .cta { animation: none; }
 }
+
+/* ====== Carte façon fast-food ====== */
+.cat-nav { position: sticky; top: 62px; z-index: 5; display: flex; gap: 8px; overflow-x: auto; padding: 10px 0; margin-bottom: 18px; scrollbar-width: none; background: linear-gradient(180deg, var(--red-deep) 70%, transparent); }
+.cat-nav::-webkit-scrollbar { display: none; }
+.cat-nav a { flex: none; padding: 9px 20px; border-radius: 999px; border: 1.5px solid rgba(246,240,228,.3); font: 400 20px "Bebas Neue"; letter-spacing: .06em; white-space: nowrap; }
+.cat-nav a:hover { background: var(--red); border-color: var(--red); }
+.cat { scroll-margin-top: 130px; margin-bottom: 44px; }
+.cat > h3 { display: flex; align-items: center; gap: 16px; font-size: clamp(38px, 6vw, 56px); color: var(--paper); margin-bottom: 18px; }
+.cat > h3::after { content: ""; flex: 1; height: 3px; background: repeating-linear-gradient(90deg, var(--red) 0 14px, transparent 14px 22px); }
+.dishes { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.dish { position: relative; background: #fff8ee; color: #1a0f0f; border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 26px rgba(0,0,0,.35); transition: transform .3s, box-shadow .3s; }
+.dish:hover { transform: translateY(-6px) rotate(-.4deg); box-shadow: 0 18px 38px rgba(0,0,0,.5); }
+.dish-media { aspect-ratio: 4/3; overflow: hidden; background: var(--red); }
+.dish-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s; }
+.dish:hover .dish-media img { transform: scale(1.08); }
+.dish-media.ico { display: grid; place-items: center; background: repeating-linear-gradient(135deg, #c3222a 0 18px, #d3262d 18px 36px); }
+.dish-media.ico svg { width: 44%; fill: none; stroke: #fff8ee; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.price { position: absolute; top: 12px; right: 12px; min-width: 62px; height: 62px; padding: 0 8px; border-radius: 50%; display: grid; place-items: center; grid-auto-flow: column; gap: 1px; background: var(--paper); color: var(--red); border: 3px solid var(--red); font: 400 28px/1 "Bebas Neue"; letter-spacing: .02em; transform: rotate(8deg); box-shadow: 0 4px 12px rgba(0,0,0,.35); }
+.price small { font-size: 16px; align-self: start; padding-top: 14px; }
+.badge { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 999px; background: #1a0f0f; color: #fff8ee; font: 600 11px "Inter"; letter-spacing: .08em; text-transform: uppercase; }
+.dish-body { padding: 14px 18px 18px; }
+.dish h4 { font: 400 28px/1.05 "Bebas Neue"; letter-spacing: .03em; color: #1a0f0f; }
+.dish p { font-size: 14px; line-height: 1.45; color: #5a4a44; margin: 6px 0 0; }
+.drinks { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.drinks li { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: var(--radius); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); }
+.drinks svg { width: 38px; flex: none; fill: none; stroke: #ff777c; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.drinks div { flex: 1; } .drinks b { font-weight: 600; } .drinks small { display: block; color: var(--muted); font-size: 13px; }
+.drinks li > span { font: 400 28px "Bebas Neue"; color: #ff777c; }
+.drinks li > span small { display: inline; font-size: 16px; color: inherit; }
+@media (max-width: 860px) {
+  .dishes { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dish h4 { font-size: 23px; } .dish-body { padding: 12px 14px 16px; } .dish p { font-size: 13px; }
+  .price { min-width: 52px; height: 52px; font-size: 23px; top: 8px; right: 8px; } .price small { padding-top: 10px; font-size: 13px; }
+  .badge { top: 8px; left: 8px; font-size: 10px; }
+  .drinks { grid-template-columns: 1fr; }
+}
+
+/* Corrections : dernières cartes centrées, fiche ouverte propre */
+.dishes { display: flex; flex-wrap: wrap; justify-content: center; }
+.dish { flex: 0 0 calc((100% - 32px) / 3); }
+.star.open .star-name { opacity: 0; }
+@media (max-width: 860px) { .dish { flex: 0 0 calc((100% - 12px) / 2); } }
