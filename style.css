@@ -310,3 +310,35 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
 .band::after { background: rgba(11,10,9,.74); }
 .band-txt h2 { text-shadow: 0 4px 30px rgba(0,0,0,.7); }
 .ev h2 { font-size: clamp(40px, 4.4vw, 58px); } .ev h2 em { white-space: nowrap; }
+
+/* ====== Accueil : une seule belle photo du bus, entière et nette ====== */
+.slide { opacity: 1; animation: none; }
+.slide img { object-position: 62% 45%; animation: calm 26s ease-in-out infinite alternate; }
+@keyframes calm { from { transform: scale(1) } to { transform: scale(1.06) } }
+.hero::after { background: linear-gradient(90deg, rgba(11,10,9,.82) 0%, rgba(11,10,9,.35) 48%, rgba(11,10,9,0) 75%), linear-gradient(180deg, rgba(11,10,9,.35) 0, transparent 22%, transparent 70%, var(--ink)); }
+.hero h1 { font-size: clamp(56px, 9vw, 118px); }
+@media (max-width: 860px) {
+  .hero { display: block; min-height: 0; }
+  .slides { position: relative; aspect-ratio: 4 / 3; }
+  .slide img { object-position: center; animation: none; }
+  .hero::after { inset: 0 0 auto 0; height: 56vw; background: linear-gradient(180deg, rgba(11,10,9,.25) 0, transparent 25%, transparent 60%, var(--ink)); }
+  .hero-in { padding: 4px var(--gutter) 70px; margin-top: -26px; }
+  .scroll-cue { display: none; }
+}
+
+/* Accueil : le bus à droite, fondu à gauche pour le texte */
+@media (min-width: 861px) {
+  .slide img { position: absolute; right: 0; top: 50%; left: auto; width: 78%; height: auto; max-height: 100%; object-fit: cover; translate: 0 -50%; animation: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30%), linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+    -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0, #000 30%), linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%); mask-composite: intersect; }
+  .hero::after { background: linear-gradient(90deg, rgba(11,10,9,.55) 0%, transparent 42%), linear-gradient(180deg, transparent 75%, var(--ink)); }
+  .hero { min-height: 88vh; }
+}
+@media (max-width: 860px) {
+  .hero::after { height: 75vw; }
+  .hero-in { margin-top: 0; padding-top: 22px; }
+}
+@media (min-width: 861px) {
+  .slide img { width: 64%; }
+  .hero h1 { font-size: clamp(56px, 7.4vw, 104px); }
+}
