@@ -371,3 +371,28 @@ footer i { color: var(--red); font-style: normal; padding: 0 6px; }
 }
 @media (min-width: 861px) { .dish-media.studio img.cut { margin-top: 5%; max-height: 78%; } }
 .truck-body h3 { margin-bottom: 4px; } .hero .lead { font-size: 22px; }
+
+/* ====== Logos du haut : même taille, cliquables vers chaque carte ====== */
+.brand { gap: 12px; }
+.brand a { display: block; width: 46px; height: 46px; flex: none; border-radius: 50%; transition: transform .25s; }
+.brand a:hover { transform: scale(1.1); }
+.brand img, .brand img + img { width: 46px; height: 46px; margin: 0; border-radius: 50%; object-fit: cover; border: 2px solid var(--paper); background: #000; }
+.brand a + a img { border-color: var(--gold); }
+.truck-logo { width: 72px; height: 72px; object-fit: cover; border: 2px solid var(--paper); background: #000; padding: 0; }
+.truck-logo.famous-logo { padding: 0; border-color: var(--paper); }
+.truck.atipik .truck-logo { border-color: var(--gold); }
+
+/* ====== Carte Atipik : même style studio, aux couleurs or et olive ====== */
+.studio.gold { background: radial-gradient(ellipse at 50% 36%, #5a5226 0%, #2f2c17 46%, #14130a 100%); }
+.studio.gold::before { background: radial-gradient(circle, rgba(220,203,134,.22), rgba(220,203,134,0) 68%); border-color: rgba(220,203,134,.25); }
+.atipik-cards { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.atipik-cards figure { aspect-ratio: 4 / 5; background: #14130a; border-color: rgba(184,162,87,.55); }
+.atipik-cards figure .studio { position: absolute; inset: 0; }
+.atipik-cards figure img.cut { max-width: 82%; max-height: 62%; margin-top: -10%; }
+.atipik-cards figure:hover img.cut { transform: scale(1.09) rotate(-2deg); }
+.atipik-cards figcaption { z-index: 2; }
+@media (max-width: 860px) {
+  .atipik-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .atipik-cards figcaption { font-size: 18px; padding: 30px 12px 10px; letter-spacing: .06em; }
+  .atipik-cards figure img.cut { max-width: 86%; max-height: 58%; }
+}

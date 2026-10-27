@@ -25,7 +25,7 @@ tabs.forEach((t, i) => {
     if (d) showTab(tabs[(i + d + tabs.length) % tabs.length].id.slice(4), true);
   });
 });
-document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click', () => showTab(a.dataset.tab)));
+document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click', () => { showTab(a.dataset.tab); setNav(false); }));
 showTab('famous');
 
 // Apparition douce
